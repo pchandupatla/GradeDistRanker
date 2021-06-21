@@ -1,7 +1,8 @@
 import './App.css';
 import {useState} from 'react'
 import ReactDOM from 'react-dom'
-// import Axios from 'axios'
+import Axios from 'axios'
+
 function App() {
   const [dept, setDept] = useState('');
   const [num, setNum] = useState(0);
