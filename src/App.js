@@ -238,7 +238,7 @@ function App() {
         <br></br>
         <input type='submit' value='Submit' className='Submit' onClick={handleSubmit}></input>
       </div>
-      <div id='test'></div>
+      <div id='MainGraph'></div>
     </div>
   );
 }

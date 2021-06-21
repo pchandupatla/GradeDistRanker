@@ -43,6 +43,13 @@
   margin-bottom: 4px;
 }
 
-
-
+#MainGraph {
+  position: relative;
+  width: 1360px;
+  height: 616px;
+  left: 40px;
+  top: 60px;
+  border: solid;
+  border-color: red;
+}
 
