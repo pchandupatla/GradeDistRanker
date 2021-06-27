@@ -45,11 +45,16 @@
 
 #MainGraph {
   position: relative;
-  width: 1360px;
-  height: 616px;
+  width: 100vw;
+  height: auto;
   left: 40px;
   top: 60px;
-  border: solid;
-  border-color: red;
+  align-content: center;
+}
+
+.GraphTitle {
+  /* position: relative; */
+  text-align: center;
+  font-family: 'Spartan', Times, serif;
 }
 
