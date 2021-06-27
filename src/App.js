@@ -10,10 +10,9 @@ function App () {
   const [name, setName] = useState('')
 
   const [gradeList, setGradeList] = useState([])
-
+  
   const handleSubmit = () => {
-    setGradeList([])
-    ReactDOM.render('', document.getElementById('MainGraph'))
+    // ReactDOM.render('', document.getElementById('MainGraph'))
     //TODO: need a way to wait for state setting
     Axios.get('http://localhost:3001/ranked', {
       params: { name: name, num: num, dept: dept }
