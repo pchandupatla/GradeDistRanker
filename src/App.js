@@ -92,7 +92,6 @@ function App () {
 
 
   const handleSubmit = () => {
-    ReactDOM.render('', document.getElementById('MainGraph'))
     ReactDOM.render(<GraphParent name={name} dept={dept} num={num}/>, document.getElementById('MainGraph'))
   }
 
