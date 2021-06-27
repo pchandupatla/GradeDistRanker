@@ -1,78 +1,99 @@
 import './App.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import Axios from 'axios'
 import { Bar } from 'react-chartjs-2'
+
+function Graph ({ gradeList }) {
+  const labels = []
+  const data = []
+  gradeList.forEach(element => {
+    labels.push(element.prof)
+    data.push(element.percentage)
+  })
+
+  const state = {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Percentage As',
+        backgroundColor: '#99ff99',
+        borderColor: 'black',
+        borderWidth: 1,
+        data: data
+      }
+    ]
+  }
+
+  const options = {
+    title: {
+      display: true,
+      text: 'Aggregate Percentage As per Professor'
+    },
+    legend: {
+      display: false,
+      position: 'right'
+    },
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            max: 100,
+            min: 0
+          }
+        }
+      ]
+    }
+  };
+
+  const bar = (
+    <div>
+      <h1 className='GraphTitle'>Aggregate Percentage As Per Professor</h1>
+      <Bar
+        data={state}
+        options={options}
+        height={100}
+      />
+    </div>
+  )
+
+  return bar;
+}
+
+function GraphParent (props) {
+  //TODO: Use useEffect() here, pass gradeList to Graph and return Graph component
+  const[gradeList, setGradeList] = useState([])
+  const[loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    updateList()
+  } ,[props.num, props.dept, props.name])
+
+  const updateList = () => {
+    Axios.get('http://localhost:3001/ranked', {
+      params: { name: props.name, num: props.num, dept: props.dept }
+    }).then(response => {
+      setGradeList(response.data)
+      setLoading(false)
+    })
+  }
+
+  return (
+    <div>
+      {!loading && <Graph gradeList={gradeList}/>}
+    </div>
+  )
+}
 
 function App () {
   const [dept, setDept] = useState('')
   const [num, setNum] = useState('')
   const [name, setName] = useState('')
 
-  const [gradeList, setGradeList] = useState([])
-  
+
   const handleSubmit = () => {
-    // ReactDOM.render('', document.getElementById('MainGraph'))
-    //TODO: need a way to wait for state setting
-    Axios.get('http://localhost:3001/ranked', {
-      params: { name: name, num: num, dept: dept }
-    }).then(response => {
-      setGradeList(response.data)
-    })
-
-    const labels = []
-    const data = []
-    gradeList.forEach(element => {
-      labels.push(element.prof)
-      data.push(element.percentage)
-    })
-
-    const state = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Percentage As',
-          backgroundColor: '#99ff99',
-          borderColor: 'black',
-          borderWidth: 1,
-          data: data
-        }
-      ]
-    }
-
-    const options = {
-      title: {
-        display: true,
-        text: 'Aggregate Percentage As per Professor'
-      },
-      legend: {
-        display: false,
-        position: 'right'
-      },
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              max: 100,
-              min: 0
-            }
-          }
-        ]
-      }
-    };
-
-    const bar = (
-      <div>
-        <h1 className='GraphTitle'>Aggregate Percentage As Per Professor</h1>
-        <Bar
-          data={state}
-          options={options}
-          height={100}
-        />
-      </div>
-    )
-
-    ReactDOM.render(bar, document.getElementById('MainGraph'))
+    ReactDOM.render('', document.getElementById('MainGraph'))
+    ReactDOM.render(<GraphParent name={name} dept={dept} num={num}/>, document.getElementById('MainGraph'))
   }
 
   return (
