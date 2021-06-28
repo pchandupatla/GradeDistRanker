@@ -47,8 +47,15 @@
   position: relative;
   width: 100vw;
   height: auto;
-  left: 40px;
-  top: 60px;
+  top: 20px;
+  align-content: center;
+}
+
+#SubGraph {
+  position: relative;
+  width: 100vw;
+  height: auto;
+  top: 20px;
   align-content: center;
 }
 
