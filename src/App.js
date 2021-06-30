@@ -4,35 +4,55 @@ import ReactDOM from 'react-dom'
 import Axios from 'axios'
 import { Bar } from 'react-chartjs-2'
 
-{
-  /* 
-<option>Aggregate</option>
-<option>Fall 2013</option>
-<option>Fall 2014</option>
-<option>Fall 2015</option>
-<option>Fall 2016</option>
-<option>Fall 2018</option>
-<option>Fall 2019</option>
-<option>Spring 2014</option>
-<option>Spring 2015</option>
-<option>Spring 2016</option>
-<option>Spring 2017</option>
-<option>Spring 2019</option>
-<option>Spring 2020</option>
-<option>Summer 2016</option>  */
-}
+function SubGraph (props) {
+  const state = {
+    labels: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
+    datasets: [
+      {
+        label: 'Count',
+        backgroundColor: [
+          '#99ff99',
+          '#ccff99',
+          '#ffe14d',
+          '#ffad33',
+          '#ff704d',
+          '#ff704d',
+          '#ff704d',
+          '#ff704d',
+          '#ff704d',
+          '#ff704d',
+          '#ff704d',
+          '#ff704d'
+        ],
+        borderWidth: 1,
+        data: props.list
+      }
+    ]
+  }
 
-//new subgraph here
-function subGraph () {}
+  const options = {}
+
+  const bar = (
+    <div>
+      <h1 className='SubGraphTitle'>
+        Grade Distribution for {props.dept + props.num} ({props.name}) - {props.prof},{' '}
+        {props.sem}
+      </h1>
+      <Bar data={state} options={options} height={50} />
+    </div>
+  )
+
+  return bar
+}
 
 //new subgraphparent here (on effect, reload the data based on the new semester, pass effect data into subgraph)
 function SubGraphParent (props) {
   const [semester, setSemester] = useState('Aggregate')
-  const [name, setName] = useState(props.name)
-  const [num, setNum] = useState(props.num)
-  const [dept, setDept] = useState(props.dept)
-  const [prof, setProf] = useState(props.prof)
-  const [aggList, setAggList] = useState(props.list)
+  const name = props.name
+  const num = props.num
+  const dept = props.dept
+  const prof = props.prof
+  const aggList = props.list
 
   useEffect(() => {
     //make graph update
@@ -40,27 +60,49 @@ function SubGraphParent (props) {
   }, [semester])
 
   const updateGraph = () => {
+    if (semester === 'Aggregate') {
+      ReactDOM.render(
+        <SubGraph
+          list={aggList}
+          prof={prof}
+          num={num}
+          dept={dept}
+          sem={semester}
+          name={name}
+        />,
+        document.getElementById('ClassGraph')
+      )
+    } else {
+      //Query for specific semester data and pass into the subgraph component
+      ReactDOM.render(
+        'NOT IMPLEMENTED YET',
+        document.getElementById('ClassGraph')
+      )
+    }
     // alert(dept +" " + num + " "+semester)
   }
 
   const createSelect = () => {
     return (
-      <select className='Select' value={semester} onChange={handleSelect}>
-        <option>Aggregate</option>
-        <option>Fall 2013</option>
-        <option>Fall 2014</option>
-        <option>Fall 2015</option>
-        <option>Fall 2016</option>
-        <option>Fall 2018</option>
-        <option>Fall 2019</option>
-        <option>Spring 2014</option>
-        <option>Spring 2015</option>
-        <option>Spring 2016</option>
-        <option>Spring 2017</option>
-        <option>Spring 2019</option>
-        <option>Spring 2020</option>
-        <option>Summer 2016</option>
-      </select>
+      <div>
+        <label id='SemesterLabel'>Semester:</label>
+        <select className='Select' value={semester} onChange={handleSelect}>
+          <option>Aggregate</option>
+          <option>Fall 2013</option>
+          <option>Fall 2014</option>
+          <option>Fall 2015</option>
+          <option>Fall 2016</option>
+          <option>Fall 2018</option>
+          <option>Fall 2019</option>
+          <option>Spring 2014</option>
+          <option>Spring 2015</option>
+          <option>Spring 2016</option>
+          <option>Spring 2017</option>
+          <option>Spring 2019</option>
+          <option>Spring 2020</option>
+          <option>Summer 2016</option>
+        </select>
+      </div>
     )
   }
 
@@ -82,7 +124,8 @@ function Graph ({ gradeList }) {
   const handleClick = (e, element) => {
     //reactdom render here, create select, as select changes, re-render subgraphparent
     if (element.length > 0) {
-      ReactDOM.render('', document.getElementById('SubGraph'))
+      ReactDOM.render('', document.getElementById('Select'))
+      ReactDOM.render('', document.getElementById('ClassGraph'))
       //initialize relevant data
       const index = element[0].index
       const relData = gradeList[index]
@@ -114,7 +157,7 @@ function Graph ({ gradeList }) {
           prof={prof}
           list={list}
         />,
-        document.getElementById('SubGraph')
+        document.getElementById('Select')
       )
     }
   }
@@ -125,7 +168,6 @@ function Graph ({ gradeList }) {
       {
         label: 'Percentage As',
         backgroundColor: '#99ff99',
-        borderColor: 'black',
         borderWidth: 1,
         data: data
       }
@@ -172,7 +214,8 @@ function App () {
   const [name, setName] = useState('')
 
   const handleSubmit = () => {
-    ReactDOM.render('', document.getElementById('SubGraph'))
+    ReactDOM.render('', document.getElementById('Select'))
+    ReactDOM.render('', document.getElementById('ClassGraph'))
     ReactDOM.render(
       <GraphParent name={name} dept={dept} num={num} />,
       document.getElementById('MainGraph')
@@ -183,7 +226,7 @@ function App () {
     <div className='App'>
       <header></header>
       <div className='Form'>
-        <p>Department</p>
+        <p>Department:</p>
         <select
           className='Select'
           value={dept}
@@ -408,7 +451,10 @@ function App () {
         ></input>
       </div>
       <div id='MainGraph'></div>
-      <div id='SubGraph'></div>
+      <div id='SubGraph'>
+        <div id='Select'></div>
+        <div id='ClassGraph'></div>
+      </div>
     </div>
   )
 }
