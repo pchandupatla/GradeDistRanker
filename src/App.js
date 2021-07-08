@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import Axios from 'axios'
 import { Bar } from 'react-chartjs-2'
 
-function SubGraph (props) {
+function AggGraph (props) {
   const state = {
     labels: ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
     datasets: [
@@ -35,8 +35,8 @@ function SubGraph (props) {
   const bar = (
     <div>
       <h1 className='SubGraphTitle'>
-        Grade Distribution for {props.dept + props.num} ({props.name}) - {props.prof},{' '}
-        {props.sem}
+        Grade Distribution for {props.dept + props.num} ({props.name}) -{' '}
+        {props.prof}, {props.sem}
       </h1>
       <Bar data={state} options={options} height={50} />
     </div>
@@ -46,7 +46,7 @@ function SubGraph (props) {
 }
 
 //new subgraphparent here (on effect, reload the data based on the new semester, pass effect data into subgraph)
-function SubGraphParent (props) {
+function AggGraphParent (props) {
   const [semester, setSemester] = useState('Aggregate')
   const name = props.name
   const num = props.num
@@ -55,31 +55,39 @@ function SubGraphParent (props) {
   const aggList = props.list
 
   useEffect(() => {
-    //make graph update
-    updateGraph()
+    if (semester === 'Aggregate') {
+      updateGraph()
+    } else {
+      classGraph()
+    }
   }, [semester])
 
   const updateGraph = () => {
-    if (semester === 'Aggregate') {
-      ReactDOM.render(
-        <SubGraph
-          list={aggList}
-          prof={prof}
-          num={num}
-          dept={dept}
-          sem={semester}
-          name={name}
-        />,
-        document.getElementById('ClassGraph')
-      )
-    } else {
-      //Query for specific semester data and pass into the subgraph component
-      ReactDOM.render(
-        'NOT IMPLEMENTED YET',
-        document.getElementById('ClassGraph')
-      )
-    }
-    // alert(dept +" " + num + " "+semester)
+    ReactDOM.render(
+      <AggGraph
+        list={aggList}
+        prof={prof}
+        num={num}
+        dept={dept}
+        sem={semester}
+        name={name}
+      />,
+      document.getElementById('ClassGraph')
+    )
+  }
+
+  const classGraph = () => {
+    //Query for specific semester data and pass into the subgraph component
+    ReactDOM.render(
+      <SubGraphParent
+        num={num}
+        sem={semester}
+        prof={prof}
+        dept={dept}
+        name={name}
+      />,
+      document.getElementById('ClassGraph')
+    )
   }
 
   const createSelect = () => {
@@ -111,6 +119,88 @@ function SubGraphParent (props) {
   }
 
   return createSelect()
+}
+
+function SubGraphParent (props) {
+  const [gradeList, setGradeList] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    updateList()
+  }, [props.num, props.dept, props.prof, props.sem])
+
+  const updateList = () => {
+    Axios.get('http://localhost:3001/sub', {
+      params: {
+        num: props.num,
+        dept: props.dept,
+        sem: props.sem,
+        prof: props.prof
+      }
+    }).then(response => {
+      setGradeList(response.data)
+      setLoading(false)
+    })
+  }
+
+  return (
+    <div>
+      {!loading && (
+        <SubGraph
+          gradeList={gradeList}
+          num={props.num}
+          dept={props.dept}
+          sem={props.sem}
+          prof={props.prof}
+          name={props.name}
+        />
+      )}
+    </div>
+  )
+}
+
+function SubGraph (props) {
+  console.log(props.gradeList)
+  if (props.gradeList.length === 0) {
+    return <div>NO DATA RETURNED</div>
+  }
+  const list = []
+  list.push(0) //a2 0
+  list.push(0) //a3 1
+  list.push(0) //b1 2
+  list.push(0) //b2 3
+  list.push(0) //b3 4
+  list.push(0) //c1 5
+  list.push(0) //c2 6
+  list.push(0) //c3 7
+  list.push(0) //d1 8
+  list.push(0) //d2 9
+  list.push(0) //d3 10
+  list.push(0) //f 11
+  props.gradeList.forEach(element => {
+    list[0] += element.a2
+    list[1] += element.a3
+    list[2] += element.b1
+    list[3] += element.b2
+    list[4] += element.b3
+    list[5] += element.c1
+    list[6] += element.c2
+    list[7] += element.c3
+    list[8] += element.d1
+    list[9] += element.d2
+    list[10] += element.d3
+    list[11] += element.f
+  })
+  return (
+    <AggGraph
+      list={list}
+      prof={props.prof}
+      num={props.num}
+      dept={props.dept}
+      sem={props.sem}
+      name={props.name}
+    />
+  )
 }
 
 function Graph ({ gradeList }) {
@@ -150,7 +240,7 @@ function Graph ({ gradeList }) {
       //reactdom render subgraphparent
       // alert(index)
       ReactDOM.render(
-        <SubGraphParent
+        <AggGraphParent
           name={name}
           num={num}
           dept={dept}
