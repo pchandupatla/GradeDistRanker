@@ -334,6 +334,52 @@ function App () {
   return (
     <div className='App'>
       <header></header>
+      <div className='Intro'>
+        <p>
+          Welcome to UT Grade Distribution Ranker, the site created to help you
+          make course choices based solely on grade distribution data.
+        </p>
+        <p>
+          <strong>Disclaimer: </strong>
+          In no way should you be selecting courses using only a course's
+          grades. That being said, grades can be a useful primary indicator of
+          interest in a course.
+        </p>
+        <p>
+          <strong>How It Works: </strong>
+          <li>
+            Enter a course to see a break-down of each professor that has taught
+            that course, ranked by the Aggregate Percentage of As students
+            earned in their section.
+          </li>
+          <li>
+            Curious about a specific professor's grade distribution beyond just
+            the Aggregate Percentage of As? Click on a bar in the graph to see a
+            semester-by-semester break-down of that professor's grade
+            distribution data.
+          </li>
+        </p>
+        <p>
+          <strong>Some Notes:</strong>
+          <li>
+            Department is the only required field. Everything else can be left blank.
+          </li>
+          <li>
+            It is almost always better to search based solely on Department and Course Number. This
+            is because the course titles in the database are greatly abbreviated to save space.
+          </li>
+          <li>
+            Your entered details are matched to courses that have similar, not exact, details. For example, if C S 314 were entered, entries
+            for C S 314H would also display in the graph. You can check if the displayed course is the exact one you are looking for by clicking
+            on the bar for the course and viewing the title of the displayed sub-graph.
+          </li>
+          <li>
+            This site is still in the early stages of development. There may be small bugs, and there are definitely some missing features. 
+            Rest assured that I am working dilligently to maintain and update this applicaiton, but know that there may be stretches between 
+            large updates.
+          </li>
+        </p>
+      </div>
       <div className='Form'>
         <p>Department:</p>
         <select

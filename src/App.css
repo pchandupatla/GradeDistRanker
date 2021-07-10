@@ -4,6 +4,25 @@
   background-color: white;
 }
 
+.Intro {
+  position: relative;
+  left: 38px;
+  font-family: 'Spartan', Times, serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 20px;
+  width: 80%;
+}
+
+.Intro p {
+  padding-bottom: 5px;
+}
+
+.Intro li {
+  margin-bottom: 10px;
+}
+
 .Form {
   position: relative;
   left: 38px;
