@@ -1,5 +1,6 @@
 import './App.css'
 import { useState, useEffect } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 import Axios from 'axios'
 import { Bar } from 'react-chartjs-2'
@@ -95,7 +96,7 @@ function AggGraphParent (props) {
       <div>
         <label id='SemesterLabel'>Semester:</label>
         <select className='Select' value={semester} onChange={handleSelect}>
-          <option>Aggregate</option>
+          {/* <option>Aggregate</option>
           <option>Fall 2013</option>
           <option>Fall 2014</option>
           <option>Fall 2015</option>
@@ -108,7 +109,8 @@ function AggGraphParent (props) {
           <option>Spring 2017</option>
           <option>Spring 2019</option>
           <option>Spring 2020</option>
-          <option>Summer 2016</option>
+          <option>Summer 2016</option> */}
+          <SelectParent num={num} prof={prof} dept={dept} />
         </select>
       </div>
     )
@@ -119,6 +121,59 @@ function AggGraphParent (props) {
   }
 
   return createSelect()
+}
+
+function SelectParent (props) {
+  const [semList, setSemList] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    updateList()
+  }, [props.num, props.dept, props.prof])
+
+  const updateList = () => {
+    Axios.get('http://localhost:3001/sems', {
+      params: {
+        num: props.num,
+        dept: props.dept,
+        prof: props.prof
+      }
+    }).then(response => {
+      setSemList(response.data)
+      setLoading(false)
+    })
+  }
+
+  const options = (
+    <React.Fragment>
+      <option>Aggregate</option>
+      <option>Fall 2013</option>
+      <option>Fall 2014</option>
+      <option>Fall 2015</option>
+      <option>Fall 2016</option>
+      <option>Fall 2018</option>
+      <option>Fall 2019</option>
+      <option>Spring 2014</option>
+      <option>Spring 2015</option>
+      <option>Spring 2016</option>
+      <option>Spring 2017</option>
+      <option>Spring 2019</option>
+      <option>Spring 2020</option>
+      <option>Summer 2016</option>
+    </React.Fragment>
+  )
+
+  return !loading && <SelectComponent semList={semList} />
+}
+
+function SelectComponent ({ semList }) {
+  const options = semList.map(sem => <option>{sem.sem}</option>)
+  return (
+    <React.Fragment>
+      <option>Aggregate</option>
+      {options}
+    </React.Fragment>
+  )
 }
 
 function SubGraphParent (props) {
@@ -160,7 +215,6 @@ function SubGraphParent (props) {
 }
 
 function SubGraph (props) {
-  // console.log(props.gradeList)
   if (props.gradeList.length === 0) {
     return <div>NO DATA RETURNED</div>
   }
