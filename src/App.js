@@ -144,30 +144,11 @@ function SelectParent (props) {
     })
   }
 
-  const options = (
-    <React.Fragment>
-      <option>Aggregate</option>
-      <option>Fall 2013</option>
-      <option>Fall 2014</option>
-      <option>Fall 2015</option>
-      <option>Fall 2016</option>
-      <option>Fall 2018</option>
-      <option>Fall 2019</option>
-      <option>Spring 2014</option>
-      <option>Spring 2015</option>
-      <option>Spring 2016</option>
-      <option>Spring 2017</option>
-      <option>Spring 2019</option>
-      <option>Spring 2020</option>
-      <option>Summer 2016</option>
-    </React.Fragment>
-  )
-
   return !loading && <SelectComponent semList={semList} />
 }
 
 function SelectComponent ({ semList }) {
-  const options = semList.map(sem => <option>{sem.sem}</option>)
+  const options = semList.map(sem => <option key={sem.sem}>{sem.sem}</option>)
   return (
     <React.Fragment>
       <option>Aggregate</option>
