@@ -160,37 +160,24 @@ function SubGraphParent (props) {
 }
 
 function SubGraph (props) {
-  console.log(props.gradeList)
+  // console.log(props.gradeList)
   if (props.gradeList.length === 0) {
     return <div>NO DATA RETURNED</div>
   }
   const list = []
-  list.push(0) //a2 0
-  list.push(0) //a3 1
-  list.push(0) //b1 2
-  list.push(0) //b2 3
-  list.push(0) //b3 4
-  list.push(0) //c1 5
-  list.push(0) //c2 6
-  list.push(0) //c3 7
-  list.push(0) //d1 8
-  list.push(0) //d2 9
-  list.push(0) //d3 10
-  list.push(0) //f 11
-  props.gradeList.forEach(element => {
-    list[0] += element.a2
-    list[1] += element.a3
-    list[2] += element.b1
-    list[3] += element.b2
-    list[4] += element.b3
-    list[5] += element.c1
-    list[6] += element.c2
-    list[7] += element.c3
-    list[8] += element.d1
-    list[9] += element.d2
-    list[10] += element.d3
-    list[11] += element.f
-  })
+  list.push(props.gradeList[0].a2)
+  list.push(props.gradeList[0].a3)
+  list.push(props.gradeList[0].b1)
+  list.push(props.gradeList[0].b2)
+  list.push(props.gradeList[0].b3)
+  list.push(props.gradeList[0].c1)
+  list.push(props.gradeList[0].c2)
+  list.push(props.gradeList[0].c3)
+  list.push(props.gradeList[0].d1)
+  list.push(props.gradeList[0].d2)
+  list.push(props.gradeList[0].d3)
+  list.push(props.gradeList[0].f)
+
   return (
     <AggGraph
       list={list}
@@ -212,7 +199,6 @@ function Graph ({ gradeList }) {
   })
 
   const handleClick = (e, element) => {
-    //reactdom render here, create select, as select changes, re-render subgraphparent
     if (element.length > 0) {
       ReactDOM.render('', document.getElementById('Select'))
       ReactDOM.render('', document.getElementById('ClassGraph'))
@@ -237,8 +223,6 @@ function Graph ({ gradeList }) {
       list.push(relData.d3)
       list.push(relData.f)
 
-      //reactdom render subgraphparent
-      // alert(index)
       ReactDOM.render(
         <AggGraphParent
           name={name}
