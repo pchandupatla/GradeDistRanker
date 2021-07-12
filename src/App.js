@@ -323,7 +323,7 @@ function App () {
       <div className='Intro'>
         <p>
           Welcome to UT Grade Distribution Ranker, the site created to help you
-          make course choices based solely on grade distribution data.
+          make more informed course choices.
         </p>
         <p>
           <strong>Disclaimer: </strong>
@@ -361,7 +361,7 @@ function App () {
           </li>
           <li>
             This site is still in the early stages of development. There may be small bugs, and there are definitely some missing features. 
-            Rest assured that I am working dilligently to maintain and update this applicaiton, but know that there may be stretches between 
+            Rest assured that I am working dilligently to maintain and update this application, but know that there may be stretches between 
             large updates.
           </li>
         </p>
