@@ -348,7 +348,7 @@ function App () {
         <p>
           <strong>Some Notes:</strong>
           <li>
-            If the site has not been used a long time, it may require a few seconds to wake up the idle back-end server. As such, your first
+            If the site has not been used in a long time, it may require a few seconds to wake up the idle back-end server. As such, your first
             request may take a few seconds to load. I am working on fixing this, but for now, just spam that submit button until the graph appears
             if it's taking a while.
           </li>
