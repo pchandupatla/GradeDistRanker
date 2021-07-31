@@ -118,3 +118,16 @@
   font-family: 'Spartan', Times, serif;
 }
 
+.Container {
+  display: flex;
+  flex-direction: row;
+}
+
+.ResultsList {
+  position: relative;
+  left: 100px;
+  width: 50%;
+  height: 300px;
+  border: 1px solid red;
+  overflow-y: auto;
+}
