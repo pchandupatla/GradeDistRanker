@@ -303,7 +303,7 @@ function GraphParent (props) {
   return <div>{!loading && <Graph gradeList={gradeList} />}</div>
 }
 
-function App () {
+function Ranker () {
   const [dept, setDept] = useState('')
   const [num, setNum] = useState('')
   const [name, setName] = useState('')
@@ -348,21 +348,28 @@ function App () {
         <p>
           <strong>Some Notes:</strong>
           <li>
-            Department is the only required field. Everything else can be left blank.
+            Department is the only required field. Everything else can be left
+            blank.
           </li>
           <li>
-            It is almost always better to search based solely on Department and Course Number. This
-            is because the course titles in the database are greatly abbreviated to save space.
+            It is almost always better to search based solely on Department and
+            Course Number. This is because the course titles in the database are
+            greatly abbreviated to save space.
           </li>
           <li>
-            Your entered details are matched to courses that have similar, not exact, details. For example, if C S 314 were entered, entries
-            for C S 314H would also display in the graph. You can check if the displayed course is the exact one you are looking for by clicking
-            on the bar for the course and viewing the title of the displayed sub-graph.
+            Your entered details are matched to courses that have similar, not
+            exact, details. For example, if C S 314 were entered, entries for C
+            S 314H would also display in the graph. You can check if the
+            displayed course is the exact one you are looking for by clicking on
+            the bar for the course and viewing the title of the displayed
+            sub-graph.
           </li>
           <li>
-            This site is still in the early stages of development. There may be small bugs, and there are definitely some missing features. 
-            Rest assured that I am working dilligently to maintain and update this application, but know that there may be stretches between 
-            large updates.
+            This site is still in the early stages of development. There may be
+            small bugs, and there are definitely some missing features. Rest
+            assured that I am working dilligently to maintain and update this
+            application, but know that there may be stretches between large
+            updates.
           </li>
         </p>
       </div>
@@ -595,6 +602,39 @@ function App () {
       <div id='SubGraph'>
         <div id='Select'></div>
         <div id='ClassGraph'></div>
+      </div>
+    </div>
+  )
+}
+
+function App () {
+  const [option, setOption] = useState('ranker')
+
+  useEffect(() => {
+    if (option === 'ranker') {
+      ReactDOM.render(<Ranker />, document.getElementById('MainSelect'))
+    } else {
+      ReactDOM.render(
+        'NOT IMPLEMENTED YET',
+        document.getElementById('MainSelect')
+      )
+    }
+  }, [option])
+
+  return (
+    <div className='App'>
+      <select
+        className='Select'
+        value={option}
+        onChange={event => {
+          setOption(event.target.value)
+        }}
+      >
+        <option value='ranker'>Ranker Mode</option>
+        <option value='catalyst'>Catalyst Mode</option>
+      </select>
+      <div id='MainSelect'>
+        <Ranker />
       </div>
     </div>
   )

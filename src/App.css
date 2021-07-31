@@ -32,6 +32,10 @@
   font-size: 15px;
 }
 
+.Form p {
+  margin-bottom: 4px;
+}
+
 .Select {
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.3));
   border-radius: 3px;
@@ -58,9 +62,6 @@
   font-family: 'Spartan', Times, serif;
 }
 
-.Form p {
-  margin-bottom: 4px;
-}
 
 #MainGraph {
   position: relative;
