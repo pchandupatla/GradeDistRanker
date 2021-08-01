@@ -607,7 +607,7 @@ function Ranker () {
 
 function GradeList ({ optionList }) {
   const options = optionList.map(option => (
-    <li key={option.prof + ' ' + option.dept + ' ' + option.course_nbr}>
+    <li key={option.prof + ' ' + option.dept + ' ' + option.course_nbr + ' ' + option.sem}>
       {option.dept} {option.course_nbr}: {option.course_name}, {option.prof},{' '}
       {option.sem}
     </li>
@@ -617,7 +617,7 @@ function GradeList ({ optionList }) {
     <p>No results found</p>
   ) : (
     <div>
-      <p>{options.length} Results Found!</p>
+      <p>{options.length} results found!</p>
       <ul className='optionsList'>{options}</ul>
     </div>
   )
@@ -668,7 +668,7 @@ function Catalyst () {
   const [num, setNum] = useState('')
   const [title, setTitle] = useState('')
   const [prof, setProf] = useState('')
-  const [sem, setSem] = useState('')
+  const [sem, setSem] = useState('Aggregate')
 
   const handleSubmit = () => {
     ReactDOM.render('', document.getElementById('ResultsList'))
@@ -936,7 +936,7 @@ function Catalyst () {
           onClick={handleSubmit}
         ></input>
       </div>
-      <div id='ResultsList'>{/* Moo */}</div>
+      <div id='ResultsList'></div>
     </div>
   )
 }
