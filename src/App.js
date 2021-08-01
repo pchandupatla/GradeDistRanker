@@ -700,6 +700,7 @@ function Catalyst () {
 
   const handleSubmit = () => {
     ReactDOM.render('', document.getElementById('ResultsList'))
+    ReactDOM.render('', document.getElementById('MainGraph'))
     ReactDOM.render(
       <ListParent dept={dept} num={num} title={title} prof={prof} sem={sem} />,
       document.getElementById('ResultsList')
