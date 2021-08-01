@@ -356,10 +356,11 @@ function Ranker () {
             greatly abbreviated to save space.
           </li>
           <li>
-            Your entered details are matched to courses that have the exact same details, with
-            the exception of the course title. For this reason, it is important that you input
-            the right course number. For example, if the course C S 331 is inputted, only
-            entries associated with C S 331 will display; C S 331H and C S 331E will not.
+            Your entered details are matched to courses that have the exact same
+            details, with the exception of the course title. For this reason, it
+            is important that you input the right course number. For example, if
+            the course C S 331 is inputted, only entries associated with C S 331
+            will display; C S 331H and C S 331E will not.
           </li>
           <li>
             This site is still in the early stages of development. There may be
@@ -604,19 +605,105 @@ function Ranker () {
   )
 }
 
+function GradeList ({ optionList }) {
+  const options = optionList.map(option => (
+    <li key={option.prof + ' ' + option.dept + ' ' + option.course_nbr}>
+      {option.dept} {option.course_nbr}: {option.course_name}, {option.prof},{' '}
+      {option.sem}
+    </li>
+  ))
+
+  return optionList.length === 0 ? (
+    <p>No results found</p>
+  ) : (
+    <div>
+      <p>{options.length} Results Found!</p>
+      <ul className='optionsList'>{options}</ul>
+    </div>
+  )
+}
+
+function ListParent (props) {
+  const [displayList, setDisplayList] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    updateList()
+  }, [props.dept, props.num, props.prof, props.title, props.sem])
+
+  const updateList = () => {
+    if (props.sem === 'Aggregate') {
+      Axios.get('http://localhost:3001/gradelist', {
+        params: {
+          dept: props.dept,
+          num: props.num,
+          prof: props.prof,
+          title: props.title
+        }
+      }).then(response => {
+        setDisplayList(response.data)
+        setLoading(false)
+      })
+    } else {
+      Axios.get('http://localhost:3001/gradelistsem', {
+        params: {
+          dept: props.dept,
+          num: props.num,
+          prof: props.prof,
+          title: props.title,
+          sem: props.sem
+        }
+      }).then(response => {
+        setDisplayList(response.data)
+        setLoading(false)
+      })
+    }
+  }
+
+  return <div>{!loading && <GradeList optionList={displayList} />}</div>
+}
+
 function Catalyst () {
   const [dept, setDept] = useState('')
   const [num, setNum] = useState('')
   const [title, setTitle] = useState('')
   const [prof, setProf] = useState('')
+  const [sem, setSem] = useState('')
 
   const handleSubmit = () => {
-    alert(dept + num + title + prof) //render list of options to choose from
+    ReactDOM.render('', document.getElementById('ResultsList'))
+    ReactDOM.render(
+      <ListParent dept={dept} num={num} title={title} prof={prof} sem={sem} />,
+      document.getElementById('ResultsList')
+    )
   }
 
   return (
     <div className='Container'>
       <div className='Form'>
+        <p>Semester:</p>
+        <select
+          className='Select'
+          value={sem}
+          onChange={event => {
+            setSem(event.target.value)
+          }}
+        >
+          <option>Aggregate</option>
+          <option>Fall 2013</option>
+          <option>Fall 2014</option>
+          <option>Fall 2015</option>
+          <option>Fall 2016</option>
+          <option>Fall 2018</option>
+          <option>Fall 2019</option>
+          <option>Spring 2014</option>
+          <option>Spring 2015</option>
+          <option>Spring 2016</option>
+          <option>Spring 2017</option>
+          <option>Spring 2019</option>
+          <option>Spring 2020</option>
+          <option>Summer 2016</option>
+        </select>
         <p>Department:</p>
         <select
           className='Select'
@@ -849,9 +936,7 @@ function Catalyst () {
           onClick={handleSubmit}
         ></input>
       </div>
-      <div className = 'ResultsList'>
-          {/* Moo */}
-      </div>
+      <div id='ResultsList'>{/* Moo */}</div>
     </div>
   )
 }

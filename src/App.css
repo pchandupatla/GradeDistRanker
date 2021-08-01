@@ -123,11 +123,22 @@
   flex-direction: row;
 }
 
-.ResultsList {
+#ResultsList {
   position: relative;
   left: 100px;
   width: 50%;
   height: 300px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   overflow-y: auto;
+}
+
+.optionsList {
+  font-family: 'Spartan', Times, serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+}
+
+.optionsList li {
+  padding: 10px;
 }
