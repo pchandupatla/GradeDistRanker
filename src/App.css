@@ -141,4 +141,9 @@
 
 .optionsList li {
   padding: 10px;
+  color: blue;
+}
+
+.optionsList li:hover {
+  cursor: pointer;
 }
