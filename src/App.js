@@ -117,7 +117,7 @@ function SelectParent (props) {
   }, [props.num, props.dept, props.prof])
 
   const updateList = () => {
-    Axios.get('http://localhost:3001/sems', {
+    Axios.get('https://grade-dist-mysql.herokuapp.com/sems', {
       params: {
         num: props.num,
         dept: props.dept,
@@ -152,7 +152,7 @@ function SubGraphParent (props) {
 
   const updateList = () => {
     if (props.sem === 'Aggregate') {
-      Axios.get('http://localhost:3001/specagg', {
+      Axios.get('https://grade-dist-mysql.herokuapp.com/specagg', {
         params: {
           num: props.num,
           dept: props.dept,
@@ -163,7 +163,7 @@ function SubGraphParent (props) {
         setLoading(false)
       })
     } else {
-      Axios.get('http://localhost:3001/sub', {
+      Axios.get('https://grade-dist-mysql.herokuapp.com/sub', {
         params: {
           num: props.num,
           dept: props.dept,
@@ -304,7 +304,7 @@ function GraphParent (props) {
   }, [props.num, props.dept, props.name])
 
   const updateList = () => {
-    Axios.get('http://localhost:3001/ranked', {
+    Axios.get('https://grade-dist-mysql.herokuapp.com/ranked', {
       params: { name: props.name, num: props.num, dept: props.dept }
     }).then(response => {
       setGradeList(response.data)
@@ -661,7 +661,7 @@ function ListParent (props) {
 
   const updateList = () => {
     if (props.sem === 'Aggregate') {
-      Axios.get('http://localhost:3001/gradelist', {
+      Axios.get('https://grade-dist-mysql.herokuapp.com/gradelist', {
         params: {
           dept: props.dept,
           num: props.num,
@@ -673,7 +673,7 @@ function ListParent (props) {
         setLoading(false)
       })
     } else {
-      Axios.get('http://localhost:3001/gradelistsem', {
+      Axios.get('https://grade-dist-mysql.herokuapp.com/gradelistsem', {
         params: {
           dept: props.dept,
           num: props.num,
