@@ -151,17 +151,30 @@ function SubGraphParent (props) {
   }, [props.num, props.dept, props.prof, props.sem])
 
   const updateList = () => {
-    Axios.get('http://localhost:3001/sub', {
-      params: {
-        num: props.num,
-        dept: props.dept,
-        sem: props.sem,
-        prof: props.prof
-      }
-    }).then(response => {
-      setGradeList(response.data)
-      setLoading(false)
-    })
+    if (props.sem === 'Aggregate') {
+      Axios.get('http://localhost:3001/specagg', {
+        params: {
+          num: props.num,
+          dept: props.dept,
+          prof: props.prof
+        }
+      }).then(response => {
+        setGradeList(response.data)
+        setLoading(false)
+      })
+    } else {
+      Axios.get('http://localhost:3001/sub', {
+        params: {
+          num: props.num,
+          dept: props.dept,
+          sem: props.sem,
+          prof: props.prof
+        }
+      }).then(response => {
+        setGradeList(response.data)
+        setLoading(false)
+      })
+    }
   }
 
   return (
@@ -610,22 +623,16 @@ function GradeList ({ optionList }) {
     <li
       onClick={() => {
         ReactDOM.render('', document.getElementById('MainGraph'))
-        if (option.sem === 'Aggregate') {
-          ReactDOM.render(<p>NOT IMPLEMENTED YET</p>, document.getElementById('MainGraph'))
-        }
-        else
-        {
-          ReactDOM.render(
-            <SubGraphParent
-              num={option.course_nbr}
-              dept={option.dept}
-              sem={option.sem}
-              prof={option.prof}
-              name={option.course_name}
-            />,
-            document.getElementById('MainGraph')
-          )
-        }
+        ReactDOM.render(
+          <SubGraphParent
+            num={option.course_nbr}
+            dept={option.dept}
+            sem={option.sem}
+            prof={option.prof}
+            name={option.course_name}
+          />,
+          document.getElementById('MainGraph')
+        )
       }}
       key={option.prof + ' ' + option.dept + ' ' + option.course_nbr}
     >
