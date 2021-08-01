@@ -46,7 +46,6 @@ function AggGraph (props) {
   return bar
 }
 
-//new subgraphparent here (on effect, reload the data based on the new semester, pass effect data into subgraph)
 function AggGraphParent (props) {
   const [semester, setSemester] = useState('Aggregate')
   const name = props.name
@@ -357,12 +356,10 @@ function Ranker () {
             greatly abbreviated to save space.
           </li>
           <li>
-            Your entered details are matched to courses that have similar, not
-            exact, details. For example, if C S 314 were entered, entries for C
-            S 314H would also display in the graph. You can check if the
-            displayed course is the exact one you are looking for by clicking on
-            the bar for the course and viewing the title of the displayed
-            sub-graph.
+            Your entered details are matched to courses that have the exact same details, with
+            the exception of the course title. For this reason, it is important that you input
+            the right course number. For example, if the course C S 331 is inputted, only
+            entries associated with C S 331 will display; C S 331H and C S 331E will not.
           </li>
           <li>
             This site is still in the early stages of development. There may be
