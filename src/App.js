@@ -351,6 +351,13 @@ function Ranker () {
             earned in their section.
           </li>
           <li>
+            Your entered details are matched to courses that have the <em>exact same </em>
+            details, with the exception of the course title. For this reason, it
+            is important that you input the right course number. For example, if
+            the course C S 331 is inputted, only entries associated with C S 331
+            will display; C S 331H and C S 331E will not.
+          </li>
+          <li>
             Curious about a specific professor's grade distribution beyond just
             the Aggregate Percentage of As? Click on a bar in the graph to see a
             semester-by-semester break-down of that professor's grade
@@ -367,13 +374,6 @@ function Ranker () {
             It is almost always better to search based solely on Department and
             Course Number. This is because the course titles in the database are
             greatly abbreviated to save space.
-          </li>
-          <li>
-            Your entered details are matched to courses that have the exact same
-            details, with the exception of the course title. For this reason, it
-            is important that you input the right course number. For example, if
-            the course C S 331 is inputted, only entries associated with C S 331
-            will display; C S 331H and C S 331E will not.
           </li>
           <li>
             This site is still in the early stages of development. There may be
@@ -709,6 +709,35 @@ function Catalyst () {
 
   return (
     <div>
+      <div className='Intro'>
+        <p>Welcome to UT Grade Distribution Ranker: Catalyst Mode</p>
+        <p>
+          <strong>Disclaimer: </strong>
+          In no way should you be selecting courses using only a course's
+          grades. That being said, grades can be a useful primary indicator of
+          interest in a course.
+        </p>
+        <p>
+          <strong>How It Works: </strong>
+          <li>
+            Enter course details to see a list of courses with similar details to your inputted course.
+            Click on a course to see its grade distribution.
+          </li>
+          <li>
+            Your entered details are matched to courses that have similar details. For example, if
+            the course C S 331 is inputted,entries associated with C S 331, C S 331H, and C S 331E 
+            will display.
+          </li>
+        </p>
+        <p>
+          <strong>Some Notes:</strong>
+          <li>
+            It is almost always better to search based solely on Department and
+            Course Number. This is because the course titles in the database are
+            greatly abbreviated to save space.
+          </li>
+        </p>
+      </div>
       <div className='Container'>
         <div className='Form'>
           <p>Semester:</p>
