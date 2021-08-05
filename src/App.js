@@ -351,11 +351,9 @@ function Ranker () {
             earned in their section.
           </li>
           <li>
-            Your entered details are matched to courses that have the <em>exact same </em>
-            details, with the exception of the course title. For this reason, it
-            is important that you input the right course number. For example, if
-            the course C S 331 is inputted, only entries associated with C S 331
-            will display; C S 331H and C S 331E will not.
+            Your entered details are matched to courses that have similar details. For example, if
+            the course C S 331 is inputted, entries associated with C S 331, C S 331H, and C S 331E 
+            will display.
           </li>
           <li>
             Curious about a specific professor's grade distribution beyond just
